@@ -8,11 +8,15 @@
 </div>
 <script>
 document.getElementById('dice').addEventListener("change", function(e){
-	document.getElementById('result').innerHTML = 'Carte n°'+e.target.value+'<br>'+carte[e.target.value];
+	document.getElementById('result').innerHTML = 'Crit Card n°'+e.target.value+
+	carte[e.target.value]+
+	'<br><br>Fumble Card n°'+e.target.value+
+	fumbleCard[e.target.value];
 });
 
 
 var carte = new Array();
+var fumbleCard = new Array();
 carte[1] = `
     <div class="Contondant">Contondant : Trachée écrasée (dégâts normaux, la cible ne peut ni parler ni respirer ; Test de Premiers Secours DD20 pour mettre fin à ces conditions)</div>
     <div class="Perforant">Perforant : Epaule transpercée (dégâts doublés, et la cible lâche l’objet qu’elle tient)</div>
@@ -324,6 +328,319 @@ carte[52] = `
     <div class="Perforant">Perforant : Logé dans un os (dégâts doublés et saignement de 2 points de dégâts ; ce saignement nécessite un test de Premiers Secours DD20 pour être arrêté)</div>
     <div class="Tranchant">Tranchant : Colonne vertébrale touchée (dégâts doublés et affaiblissement temporaire de 3d6 points de DEX - Vigueur pour moitié)</div>
     <div class="Magique">Magique : Que je t'aime ! (dégâts normaux et la cible est charmée pendant 3 rounds - Volonté annule)</div>
+`
+fumbleCard[1] = `
+    <div class="Cac">Càc : Viser trop loin (vous provoquez une attaque d'opportunité de la part tous les ennemis adjacents)</div>
+    <div class="Distance">Distance : Mal au dos (vous êtes fatigué)</div>
+    <div class="Naturelle">Naturelle : Mal au ventre (fiévreux pendant 1d4 rounds)</div>
+    <div class="Magique">Magique : Retour d'énergie (l'attaque vous touche et il s'agit d'une possibilité de critique; il faut tirer le dé pour confirmer le critique)</div>
+`
+fumbleCard[2] = `
+    <div class="Cac">Càc : Terrible faute (l'attaque vous touche et il s'agit d'une menace de critique. Vous devez relancer l'attaque pour confirmer le coup critique).</div>
+    <div class="Distance">Distance : Oops ! (Vous tombez à terre).</div>
+    <div class="Naturelle">Naturelle : Mal positionné (Vous ne pouvez plus utiliser cette attaque pendant 1 round).</div>
+    <div class="Magique">Magique : Esprit vidé (Vous subissez un affaiblissement temporaire de 1d4 points en Intelligence, Sagesse ou Charisme — déterminez aléatoirement la caractéristique).</div>
+`
+fumbleCard[3] = `
+    <div class="Cac">Càc : Perte d'équilibre (Vous subissez un malus de -4 à tous les jets d'attaque pendant 1 round).</div>
+    <div class="Distance">Distance : Tir sur un allié (Votre attaque touche votre allié le plus proche de votre cible).</div>
+    <div class="Naturelle">Naturelle : Ongle cassé (Vous subissez 1d4 points de dégâts et vous ne pouvez plus utiliser cette attaque avant d'avoir été soigné).</div>
+    <div class="Magique">Magique : Perte de puissance (vous perdez un sort préparé ou un emplacement de sort déterminé au hasard).</div>
+`
+fumbleCard[4] = `
+    <div class="Cac">Càc : Égratignure (Vous subissez 1 point de saignement)</div>
+    <div class="Distance">Distance : Munitions éparpillées (Vos munitions tombent; il faut 1d6 rounds pour les rassembler)</div>
+    <div class="Naturelle">Naturelle : (Votre attaque touche un allié qui est adjacent à vous ou à votre cible)</div>
+    <div class="Magique">Magique : Fatigue (Vous êtes fatigué)</div>
+`
+fumbleCard[5] = `
+    <div class="Cac">Càc : Ouverture (Vous êtes pris au dépourvu pendant 1 round).</div>
+    <div class="Distance">Distance : Endommagé (Votre arme subit 1d6 points de dégâts qui ignorent sa solidité)</div>
+    <div class="Naturelle">Naturelle : Poing contre visage (L'attaque vous touche et il s'agit d'une menace de critique, vous devez relancer puor confirmer le coup critique).</div>
+    <div class="Magique">Magique : Téléportation (Vous êtes téléporté jusqu'à un emplacement adjacent à votre cible).</div>
+`
+fumbleCard[6] = `
+    <div class="Cac">Càc : Muscle froissé (Vous subissez un affaiblissement temporaire de 1d4 points de Force).</div>
+    <div class="Distance">Distance : Attaque étrange (Vous subissez un malus de -2 à la CA pendant 1d4 rounds).</div>
+    <div class="Naturelle">Naturelle : Je m'a mordu (Vous subissez un point de saignement).</div>
+    <div class="Magique">Magique : Feu magique (vous subissez 2d6 points de dégâts de feu).</div>
+`
+fumbleCard[7] = `
+    <div class="Cac">Càc : Lancer (Vous laissez tomber votre arme et elle se retrouve 1d6 cases plus loin dans une direction aléatoire)</div>
+    <div class="Distance">Distance : Vertiges (Vous êtes nauséeux pendant 1d4 rounds)</div>
+    <div class="Naturelle">Naturelle : Extension (Vous vous étirez de trop pour porter votre attaque; vous provoquez une attaque d'opportunité de tous les ennemis adjacents)</div>
+    <div class="Magique">Magique : Réflexion (Le sort vous touche au lieu de la cible; s'il autorise un jet de sauvegarde, vous en bénéficiez)</div>
+`
+fumbleCard[8] = `
+    <div class="Cac">Càc : Coup en arrière (L'attaque vous inflige des dégâts à vous plutôt qu'à votre cible)</div>
+    <div class="Distance">Distance : Grand ouvert (Vous êtes pris au dépourvu pendant 1 round)</div>
+    <div class="Naturelle">Naturelle : Croc-en-jambe (Vous tombez sur le sol)</div>
+    <div class="Magique">Magique : Enchevêtré (Vous vous enchevêtrez dans votre équipement jusqu'à ce que vous utilisiez une action simple pour vous en libérer)</div>
+`
+fumbleCard[9] = `
+    <div class="Cac">Càc : Je t'avais dit que c'était coupant (Vous subissez un saignement de 1d6 points de dégâts).</div>
+    <div class="Distance">Distance : Idiot (Vous laissez tomber votre arme).</div>
+    <div class="Naturelle">Naturelle : Arrête de te frapper toi-même (L'attaque vous inflige des dégâts à vous au lieu de la cible).</div>
+    <div class="Magique">Magique : Pas moi, idiot ! (Votre attaque touche votre allié le plus proche de votre cible).</div>
+`
+fumbleCard[10] = `
+    <div class="Cac">Càc : Tourniole (le coup vous fait tourner sur vous-même; vous êtes nauséeux pendant 1d4 rounds)</div>
+    <div class="Distance">Distance : Égratignure (vous saignez : 1 point par round)</div>
+    <div class="Naturelle">Naturelle : Entremêlé (vous vous enchevêtrez dans votre équipement; vous devez utiliser une action simple pour vous libérer)</div>
+    <div class="Magique">Magique : Coup digne d'un apprenti (vous devez relancer le jet d'attaque, en ciblant la créature la plus proche de la cible, à part vous)</div>
+`
+fumbleCard[11] = `
+    <div class="Cac">Càc : Glissade (Vous tombez à terre).</div>
+    <div class="Distance">Distance : Contrecoup (L'attaque vous inflige des dégâts à vous plutôt qu'à votre cible).</div>
+    <div class="Naturelle">Naturelle : Égo blessé (Vous ne pouvez pas attaquer d'autre cible pendant 1d4 rounds, ou avant que votre cible actuelle ne soit morte).</div>
+    <div class="Magique">Magique : Saignement de nez (Vous subissez 1 point de saignement).</div>
+`
+fumbleCard[12] = `
+    <div class="Cac">Càc : Lame cassée (votre arme est détruite - sauf en cas de jet de Réflexes réussi -; les armes magiques utilisent leur propre bonus au JdS)</div>
+    <div class="Distance">Distance : Coup dans la rate (Vous subissez 1 point d'affaiblissement temporaire de Constitution)</div>
+    <div class="Naturelle">Naturelle : Frustration (Vous subissez une pénalité de -4 à tous les jets d'attaque pendant 1 round)</div>
+    <div class="Magique">Magique : Faille entre les plans (Votre sort est converti en un sort de conjuration de monstre du même niveau; le monstre vous attaque.)</div>
+`
+fumbleCard[13] = `
+    <div class="Cac">Càc : Trop de bazar (Vous vous enchevêtrez dans votre équipement, jusqu'à ce que vous utilisiez une action simple pour vous en dépêtrer).</div>
+    <div class="Distance">Distance : Entorse (Vous subissez un affaiblissement temporaire de 1d4 points de Dextérité).</div>
+    <div class="Naturelle">Naturelle : Poing qui saigne (Vous subissez 1d6 points de saignement).</div>
+    <div class="Magique">Magique : Vertige (Vous êtes fiévreux pendant 1d4 rounds).</div>
+`
+fumbleCard[14] = `
+    <div class="Cac">Càc : Arme lourde (Vous êtes fatigué)</div>
+    <div class="Distance">Distance : Visée détournée (Relancez l'attaque contre la créature la plus proche de la cible, à part vous)</div>
+    <div class="Naturelle">Naturelle : Attaque étrange (Vous subissez une pénalité de -2 à la CA pendant 1d4 rounds)</div>
+    <div class="Magique">Magique : Yeux qui saignent (Vous subissez 1d6 points de saignement)</div>
+`
+fumbleCard[15] = `
+    <div class="Cac">Càc : Doigts en caoutchouc (vous laissez tomber votre arme)</div>
+    <div class="Distance">Distance : Corde brisée (si l'attaque a été portée avec un arc ou une arbalète, la corde est brisée et il faut 1d3 rounds pour la réparer)</div>
+    <div class="Naturelle">Naturelle : Claquage (vous prenez un point de diminution permanente de Force - Vigueur annule)</div>
+    <div class="Magique">Magique : Fatigue mentale (vous ne pouvez lancer aucun sort pendant 1 round)</div>
+`
+fumbleCard[16] = `
+    <div class="Cac">Càc : Effort trop grand (Vous subissez 1d4 points d'affaiblissement temporaire de Dextérité)</div>
+    <div class="Distance">Distance : Emmêlé (Vous vous emmêlez dans votre équipement; il faut une action simple pour vous libérer)</div>
+    <div class="Naturelle">Naturelle : Ouverture (Vous êtes pris au dépourvu pendant 1 round)</div>
+    <div class="Magique">Magique : Froid intense (Vous subissez 2d6 points de dégâts de froid)</div>
+`
+fumbleCard[17] = `
+    <div class="Cac">Càc : Attaque étrange (pénalité de -2 à la CA pendant 1d4 rounds)</div>
+    <div class="Distance">Distance : Tu vas te faire mal à l'oeil ! (L'attaque vous touche et est une menace critique; vous devez refaire une attaque pour confirmer le critique)</div>
+    <div class="Naturelle">Naturelle : Attaque fatigante (vous êtes fatigué)</div>
+    <div class="Magique">Magique : Acide (vous subissez 2d6 points de dégâts d'acide)</div>
+`
+fumbleCard[18] = `
+    <div class="Cac">Càc : Entaille (Votre arme subit 1d6 points de dégâts qui ignorent sa solidité).</div>
+    <div class="Distance">Distance : Doigts entaillés (Vous subissez 1d6 points de dégâts de saignement).</div>
+    <div class="Naturelle">Naturelle : Déchirement musculaire (Vous subissez un affaiblissement temporaire de 1d4 points de Force).</div>
+    <div class="Magique">Magique : Contrecoup électrique (Vous subissez 2d6 points de dégâts d'électricité).</div>
+`
+fumbleCard[19] = `
+    <div class="Cac">Càc : Désolé ! (Votre attaque touche un allié adjacent à vous ou à la cible)</div>
+    <div class="Distance">Distance : Désorienté (Vous subissez un malus de -4 à tous les jets d'attaque pendant 1 round)</div>
+    <div class="Naturelle">Naturelle : Claquage (Vous subissez un affaiblissement temporaire de 1d4 points de Dextérité)</div>
+    <div class="Magique">Magique : Affaibli (Vous subissez un malus de -2 à tous les DD de vos sorts pendant 1d4 minutes)</div>
+`
+fumbleCard[20] = `
+    <div class="Cac">Càc : Bout de souffle (Vous ne pouvez accomplir qu'une action de mouvement au cours du round suivant)</div>
+    <div class="Distance">Distance : Mauvaise arme (S'il s'agit d'une arme de lancer, vous vous trompez et lancez un autre objet de votre équipement)</div>
+    <div class="Naturelle">Naturelle : Trop près (Votre attaque touche la cible, mais celle-ci peut commencer une lutte contre vous sans utiliser d'action)</div>
+    <div class="Magique">Magique : Renforcement (La cible gagne un bonus d'altération de +8 à la Force pendant 1d4 rounds)</div>
+`
+fumbleCard[21] = `
+    <div class="Cac">Càc : Tout ou rien (malus de -1 aux jets d'attaque jusqu'à ce que vous réalisez un critique)</div>
+    <div class="Distance">Distance : Près de l'oreille (assourdi jusqu'à guérison par un test de Premier Secours de DD 15)</div>
+    <div class="Naturelle">Naturelle : Douleurs piquantes (fiévreux pendant 1d6 rounds)</div>
+    <div class="Magique">Magique : Pourquoi moi ? (Vous provoquez des attaques d'opportunité de la part de tous les ennemis qui vous menacent)</div>
+`
+fumbleCard[22] = `
+    <div class="Cac">Càc : Entouré d'ennemis (Votre attaque touche un allié à portée et est automatiquement une menace de critique. Vous devez relancer un jet d'attaque pour confirmer)</div>
+    <div class="Distance">Distance : Anxieux (Vous subissez une pénalité de -1 aux jets d'attaque pour 1d4 jours, ou jusqu'à ce que vous obteniez un toucher critique)</div>
+    <div class="Naturelle">Naturelle : Grand rugissement (Vous êtes assourdi jusqu'à ce que vous soyez soigné - test de Premier Secours DD 15)</div>
+    <div class="Magique">Magique : Erreur ! (L'attaque vous inflige des dégâts à vous plutôt qu'à la cible)</div>
+`
+fumbleCard[23] = `
+    <div class="Cac">Càc : Coup sur l'armure (Votre attaque inflige des dégâts à votre armure).</div>
+    <div class="Distance">Distance : Perte d'équilibre (Vous ne pouvez effectuer qu'une action de déplacement lors de votre prochain round).</div>
+    <div class="Naturelle">Naturelle : Meurtri (Vous subissez un malus de -2 sur tous les tests de compétence et les jets de sauvegarde pendant 1d4 heures).</div>
+    <div class="Magique">Magique : Explosion inattendue (Le sort affecte toutes les cibles dans un rayon de 6 cases autour de vous, vous êtes immunisé contre son effet.)</div>
+`
+fumbleCard[24] = `
+    <div class="Cac">Càc : Coup sur la tête (Vous êtes étourdi pendant un round, sauf si vous réussissez un jet de Vigueur)</div>
+    <div class="Distance">Distance : Tir dans le pied (Vous subissez 1d2 point d'affaiblissement temporaire de Dextérité et votre vitesse est réduite de moitié jusqu'à ce que vous soyez soigné)</div>
+    <div class="Naturelle">Naturelle : Trop étiré (Vous êtes fatigué, sauf si vous réussissez un jet de Vigueur)</div>
+    <div class="Magique">Magique : Effet de bord (Un de vos objets magiques gagne une capacité négative de manière permanente - DMG 273)</div>
+`
+fumbleCard[25] = `
+    <div class="Cac">Càc : Certainement pas ! (Votre attaque touche votre cible mais elle inflige des dégâts minimaux).</div>
+    <div class="Distance">Distance : Grand raté (Vous êtes étourdi pendant 1 round - Viguer annule).</div>
+    <div class="Naturelle">Naturelle : Os endommagé (vous subissez un affaiblissement temporaire de 1d2 points de Constitution).</div>
+    <div class="Magique">Magique : Agrandissement (La cible augmente d'une catégorie de taille pendant 1d4 rounds).</div>
+`
+fumbleCard[26] = `
+    <div class="Cac">Càc : C'est moche (Vous subissez un saignement dont la quantité est égale à votre bonus de Force, minimum 1).</div>
+    <div class="Distance">Distance : Quels sont les chances que ça se produise ? (Si vous utilisez une arme de lancer, votre attaque touche la cible mais cette dernière attrape l'arme).</div>
+    <div class="Naturelle">Naturelle : Tourbillon et honte (Votre attaque inflige des dégâts à toutes les cibles adjacentes à votre position sauf à celle que vous visiez).</div>
+    <div class="Magique">Magique : Composants mélangés (Vous ne pouvez effectuer qu'une action de mouvement au cours du prochain round).</div>
+`
+		
+fumbleCard[27] = `
+    <div class="Cac">Càc : Tel est pris ... (Vous subissez les dégâts au lieu de les infliger à votre cible).</div>
+    <div class="Distance">Distance : Dans la ligne de mire (Votre attaque touche l'allié le plus proche et il s'agit d'une menace de critique ; vous devez relancer pour confirmer le coup critique).</div>
+    <div class="Naturelle">Naturelle : Tête contre mur (Vous êtes hébété pendant 1d3 rounds).</div>
+    <div class="Magique">Magique : Vous m'entendez ? (Vous êtes assourdi jusqu'à ce que vous soyez soigné par un test de Premiers Secours de DD 15 ou un sort de soin).</div>
+`
+fumbleCard[28] = `
+    <div class="Cac">Càc : Coup qui résonne (Vous êtes assourdi jusqu'à ce que vous soyez soigné par un test de Premiers Secours de DD 15 ou un sort de soin).</div>
+    <div class="Distance">Distance : Baisser sa garde (Vous provoquez des attaques d'opportunité de la part de tous les ennemis qui vous menacent).</div>
+    <div class="Naturelle">Naturelle : Raté féroce (Votre attaque touche un allié à portée et il s'agit d'une menace de critique ; vous devez relancer pour confirmer le coup critique).</div>
+    <div class="Magique">Magique : La magie est partie (Vous subissez une pénalité de -1 aux jets d'attaque jusqu'à ce que vous obteniez un coup critique).</div>
+`
+fumbleCard[29] = `
+    <div class="Cac">Càc : Donne-le (Votre cible prend possession de votre arme - Réflexes annule)</div>
+    <div class="Distance">Distance : Cassé (Votre arme est brisée - Réflexes annule ; les armes magiques utilisent leur propre bonus au JdS)</div>
+    <div class="Naturelle">Naturelle : Coup sur le sol (Vous lancez un nuage de poussière dans l'air qui vous aveugle pendant 1d4 rounds - Vigueur annule).</div>
+    <div class="Magique">Magique : Accéléré (La cible est hâtée pendant 1d4 rounds comme par le sort de rapidité).</div>
+`
+fumbleCard[30] = `
+    <div class="Cac">Càc : Petit juif (Vous lâchez ce que vous tenez dans votre main secondaire - à noter que le "petit juif" est la traduction de "funny bone", qui fait référence au nerf qui passe derrière le coude et qui donne une sensation électrique lorsqu'on le touche)</div>
+    <div class="Distance">Distance : Pas mon poney ! (Votre attaque touche l'animal ou la monture alliée la plus proche)</div>
+    <div class="Naturelle">Naturelle : Coup de tête (Vous êtes étourdi pendant 1 round, à moins de réussir un jet de Vigueur)</div>
+    <div class="Magique">Magique : Blocage (Vous ne pouvez plus lancer ce sort pendant 24 heures)</div>
+`
+fumbleCard[31] = `
+    <div class="Cac">Càc : Plié (Vous subissez une pénalité de -4 à tous les jets d'attaque avec l'arme utilisée jusqu'à ce qu'elle soit réparée ; test d'Artisanat DD 20)</div>
+    <div class="Distance">Distance : Double raté (Vous gaspillez deux fois plus de munitions que la normale)</div>
+    <div class="Naturelle">Naturelle : Attrapé (La cible peut tenter un croc-en-jambe, une bousculade ou un écrasement sur vous).</div>
+    <div class="Magique">Magique : tête qui tourne (Vous êtes étourdi pendant 1 round ; JdS Vigueur annule)</div>
+`
+fumbleCard[32] = `
+    <div class="Cac">Càc : Coup dévié (votre attaque vous inflige des dégâts - utiliser le modificateur de Force de la cible)</div>
+    <div class="Distance">Distance : Arme déréglée (il faut passer une action simple à la réparer)</div>
+    <div class="Naturelle">Naturelle : Éternuement ! (Vous êtes hébété pendant 1 round)</div>
+    <div class="Magique">Magique : (1 point de Cha de saignement)</div>
+`
+fumbleCard[33] = `
+    <div class="Cac">Càc : Coup rendu (Votre attaque vous inflige des dégâts ; utilisez le modificateur de Force de votre adversaire).</div>
+    <div class="Distance">Distance : Arme bloquée (Si vous utilisez une arme à projectile, elle ne fonctionne pas ; il faut une action simple pour débloquer).</div>
+    <div class="Naturelle">Naturelle : Atchoum ! (vous êtes hébété pendant 1 round).</div>
+    <div class="Magique">Magique : C'est moche ! (Vous subissez un point de saignement de Charisme).</div>
+`
+fumbleCard[34] = `
+    <div class="Cac">Càc : Coupure (Vous subissez un saignement de 1 point de Force)</div>
+    <div class="Distance">Distance : Oops ! (L'attaque vous inflige des dégâts à vous au lieu de la cible)</div>
+    <div class="Naturelle">Naturelle : Ongle incarné (Vous subissez un malus de -1 aux jets d'attaque jusqu'à ce que vous obteniez un toucher critique)</div>
+    <div class="Magique">Magique : (Votre attaque touche l'allié le plus proche et vous obtenez automatiquement une menace de critique; vous devez relancer l'attaque pour confirmer le critique)</div>
+`
+fumbleCard[35] = `
+    <div class="Cac">Càc : Essoufflé (vous êtes fatigué, un jet de Vigueur permet d'échapper aux effets)</div>
+    <div class="Distance">Distance : Mal ajusté (-4 aux attaques avec cette arme jusqu'à ce qu'elle soit réparée - jet d'Artisanat de DD 20)</div>
+    <div class="Naturelle">Naturelle : Il t'a mordu ! (La cible vous inflige des dégâts de morsure)</div>
+    <div class="Magique">Magique : Mauvaise affaire (L'attaque touche mais vous perdez un sort ou un emplacement de sort du plus haut niveau de sorts auquel vous avez accès - vous choisissez le sort perdu)</div>
+`
+fumbleCard[36] = `
+    <div class="Cac">Càc : Coincé (Votre arme est coincée dans une surface proche; Jet de Force DD 20 pour la libérer)</div>
+    <div class="Distance">Distance : Claquage d'épaule (Vous subissez une pénalité de -2 à tous les jets d'attaque à distance pendant 1d4 minutes)</div>
+    <div class="Naturelle">Naturelle : Perte d'équilibre (Vous ne pouvez entreprendre qu'une action de mouvement au round suivant)</div>
+    <div class="Magique">Magique : Bouclier magique (La cible gagne une RM égale à 11 + votre NLS pendant 1d6 rounds)</div>
+`
+fumbleCard[37] = `
+    <div class="Cac">Càc : Attaquer les ténèbres (tous les ennemis bénéficie d'un camouflage contre les attaques du personnage pendant 1d4 rounds)</div>
+    <div class="Distance">Distance : Vise mieux (Pendant 3 rounds, le personnage doit passer un round entier pour attaquer, et ne faire qu'une seule attaque)</div>
+    <div class="Naturelle">Naturelle : Collision brutale (L'attaque touche, mais le personnage est étourdi pendant 2 rounds - 1 seul round en cas de jet de Vigueur réussi)</div>
+    <div class="Magique">Magique : Transfert de puissance (L'effet de sort de plus haut niveau qui vous affecte est transféré à votre adversaire)</div>
+`
+fumbleCard[38] = `
+    <div class="Cac">Càc : Hein ? Quoi ? (Vous êtes confus pendant 1 round)</div>
+    <div class="Distance">Distance : Ne me frappe pas ! (Pendant 3 rounds, vous subissez des pénalités cumulatives de -2 aux attaques à distance pour chaque allié combattant au corps-à-corps votre cible)</div>
+    <div class="Naturelle">Naturelle : Nerf pincé (Si vous aviez une allonge de plus d'1 case, elle est réduite à 1 case pendant 3 rounds)</div>
+    <div class="Magique">Magique : Erreur (Pendant son prochain tour, votre cible peut vous infliger une suggestion)</div>
+`
+fumbleCard[39] = `
+    <div class="Cac">Càc : Le mauvais bout (Si vous utilisez une arme tranchante, vous subissez 1d6 points de dégâts et 1 point de saignement)</div>
+    <div class="Distance">Distance : Vent inexistant (Vous compensez une brise qui n'est pas réellement là. Vous subissez un malus de -2 à vos jets d'attaque pendant 3 rounds)</div>
+    <div class="Naturelle">Naturelle : Trop d'hésitation (Les bonus d'armure et d'armure naturelle de votre opposant sont doublés pendant 3 rounds contre vos attaques)</div>
+    <div class="Magique">Magique : Plus de jus (Vous subissez 1 point de saignement d'Intelligence)</div>
+`
+fumbleCard[40] = `
+    <div class="Cac">Càc : Vibration (Si vous utilisez une arme contondante, vous subissez 1d3 points d'affaiblissement temporaire de Force et vous laissez tomber votre arme)</div>
+    <div class="Distance">Distance : Recul (Vous reculez d'une case et vous tombez sur le sol)</div>
+    <div class="Naturelle">Naturelle : Pied blessé (Vous subissez 1d3 points de dégâts et votre vitesse est réduite de moitié jusqu'à ce que vous soyez soigné)</div>
+    <div class="Magique">Magique : Esprit faible (Vous subissez un saignement de 1 point de Sagesse par round)</div>
+`
+fumbleCard[41] = `
+    <div class="Cac">Càc : Doute (Vous êtes fiévreux pendant 1d6 rounds).</div>
+    <div class="Distance">Distance : Mélange (Vous êtes incapable de porter des attaques à distance pendant les prochains 1d6 rounds).</div>
+    <div class="Naturelle">Naturelle : Ongle arraché (S'il s'agissait d'une attaque de griffe, de coup ou à main nue, vous ne pouvez plus attaquer cette attaque pendant 1d6 rounds).</div>
+    <div class="Magique">Magique : Vide magique (1d3 sorts actifs sur vous choisis au hasard sont dissipés).</div>
+`
+fumbleCard[42] = `
+    <div class="Cac">Càc : Mords la poussière (Vous tombez et être aveuglé pendant 1d3 rounds - Vigueur annule).</div>
+    <div class="Distance">Distance : Compensation trop forte (Toutes les cibles qui bénéficient d'un abri contre vos attaques gagnent un bonus supplémentaire de +4 à la CA contre elles pendant 3 rounds).</div>
+    <div class="Naturelle">Naturelle : C'est dégoûtant ! (S'il s'agissait d'une attaque de morsure, vous êtes fiévreux pendant 1d6 rounds).</div>
+    <div class="Magique">Magique : Transfert d'énergie (Vous perdez un sort ou un emplacement de sort choisi au hasard et votre cible peut lancer ce sort au cours du prochain round).</div>
+`
+fumbleCard[43] = `
+    <div class="Cac">Càc : Tu avais l'intention de faire ça ? (Déplacez-vous de 2 cases dans une direction aléatoire en provoquant des attaques d'opportunité normalement).</div>
+    <div class="Distance">Distance : Mauvaise estimation de la distance (Tous les jets d'attaque au-delà d'un facteur de portée subissent le triple de la pénalité normale de distance pendant 3 rounds).</div>
+    <div class="Naturelle">Naturelle : Pas le point faible (L'armure de votre ennemi subit 1d6 points de dégâts, vous subissez 1d6 points de dégâts et vous ne pouvez plus utiliser cette attaque pendant 1d3 rounds).</div>
+    <div class="Magique">Magique : Comment est-ce arrivé ? (Un nuage nauséabond apparaît, centré sur vous).</div>
+`
+fumbleCard[44] = `
+    <div class="Cac">Càc : Coup à la tête (Vous êtes hébété/dazed pendant 1d3 rounds)</div>
+    <div class="Distance">Distance : Voir double (Toutes vos attaques ont un pourcentage d'échec de 50% pendant 1 round)</div>
+    <div class="Naturelle">Naturelle : Dent cassée (Vous subissez une pénalité de -2 aux jets d'attaque pendant 1d6 minutes)</div>
+    <div class="Magique">Magique : Magie fragmentée (1d4+2 images miroir surgissent autour de votre cible; ces images persistent pendant 1 minute, ou jusqu'à ce qu'elles soient détruites)</div>
+`
+fumbleCard[45] = `
+    <div class="Cac">Càc : Arme qui échappe des mains (Votre arme inflige des dégâts non-létaux pendant les trois prochains rounds)</div>
+    <div class="Distance">Distance : Hein ? (Vous êtes confus pendant 1 round)</div>
+    <div class="Naturelle">Naturelle : Douleur à l'oeil (Vous êtes aveuglé pendant 1 round)</div>
+    <div class="Magique">Magique : Recul (Vous êtes envoyé 1d6 x 2 cases dans les airs ou dans une direction aléatoire si vous êtes en vol ; Volonté annule)</div>
+`
+fumbleCard[46] = `
+    <div class="Cac">Càc : Envol (Votre arme vole sur 2d6 cases dans une direction aléatoire).</div>
+    <div class="Distance">Distance : Trop de sang (Vous êtes fiévreux pendant 1d6 rounds).</div>
+    <div class="Naturelle">Naturelle : Mouvement involontaire (Déplacez vous de 2 cases dans une direction aléatoire et provoquez des attaques d'opportunité normalement).</div>
+    <div class="Magique">Magique : Ca brille ! (Vous êtes aveuglé pendant 1 round).</div>
+`
+fumbleCard[47] = `
+    <div class="Cac">Càc : Parade ! Esquive ! Pas de côté ! Fente ! (Vous êtes hébété pendant 1 round)</div>
+    <div class="Distance">Distance : Tendon déchiré (1 point de saignement de Dextérité)</div>
+    <div class="Naturelle">Naturelle : Échec cuisant (1d6 points de dégâts nonlétaux et pénalité de -2 aux jets d'attaque avec cette arme naturelle pendant 1d4 rounds)</div>
+    <div class="Magique">Magique : Maudit ! (pénalité de -4 aux jets d'attaques, jets de sauvegarde, tests de compétence et tests de caractéristique ; l'effet ne peut être enlevé qu'avec une délivrance des malédictions. </div>
+`
+fumbleCard[48] = `
+    <div class="Cac">Càc : Échec catastrophique (Vous tombez inconscient pendant 1d6 rounds - JdS Volonté pour éviter)</div>
+    <div class="Distance">Distance : Trop loin (Si l'attaque était avec une arme lancée, celle-ci parcourt 5 fois son facteur de portée dans une direction aléatoire)</div>
+    <div class="Naturelle">Naturelle : Mieux vaut ne pas s'y frotter ! (1 point d'affaiblissement temporaire de Con)</div>
+    <div class="Magique">Magique : Punition magique (votre prochain JdS est un échec automatique)</div>
+`
+fumbleCard[49] = `
+    <div class="Cac">Càc : Échec catastrophique (vous tombez inconscient pendant 1d6 rounds - Volonté annule)</div>
+    <div class="Distance">Distance : Trop loin (Si l'attaque est faite avec une arme de lancer, elle se déplace de 5 fois son facteur de portée dans une direction aléatoire)</div>
+    <div class="Naturelle">Naturelle : Ne me cherche pas (1 point d'affaiblissement temporaire de Constitution)</div>
+    <div class="Magique">Magique : Contre-coup magique (Votre prochain jet de sauvegarde échoue automatiquement)</div>
+`
+fumbleCard[50] = `
+    <div class="Cac">Càc : Manche cassé (Votre arme perd son allonge; elle est brisée)</div>
+    <div class="Distance">Distance : Claquage de pouce (Vous perdez votre bonus de Dextérité aux jets d'attaque pendant 3 rounds)</div>
+    <div class="Naturelle">Naturelle : Mauvais coup (C'est à vous plutôt qu'à la cible que votre attaque inflige des dégâts)</div>
+    <div class="Magique">Magique : Dur dur (Vous subissez 1 point d'affaiblissement temporaire de Constitution) </div>
+`
+fumbleCard[51] = `
+    <div class="Cac">Càc : Vise les yeux, Boo ! (aveuglé 1 round)</div>
+    <div class="Distance">Distance : Il s'est coincé les doigts dedans (vous subissez 1d6 points de dégâts)</div>
+    <div class="Naturelle">Naturelle : Les vents changeant (vous ne contrôlez aucune case pendant 1d6 rounds)</div>
+    <div class="Magique">Magique : Je ne vous vois plus (la cible devient invisible pendant 1d4 rounds)</div>
+`
+fumbleCard[52] = `
+    <div class="Cac">Càc : Brouillard de guerre (vous ne contrôlez plus aucun espace pendant 1d6 rounds)</div>
+    <div class="Distance">Distance : Dans le mille (Le projectile fait un ricochet et vous touche à l'oeil. Aveuglé pendant 1 round)</div>
+    <div class="Naturelle">Naturelle : Doigt retourné (La cible subit des dégâts normaux et vous subissez des dégâts doublés)</div>
+    <div class="Magique">Magique : Rien à craindre (Vous êtes secoué pendant 2d4 rounds)</div>
 `
 </script>
 </body>
